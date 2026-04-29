@@ -11,11 +11,11 @@ The goal is to design and implement a program (using Python and the terminal) th
 
 **How the algorithm works in practice:**
 1. **The Alphabet as Numbers:** We treat letters as numbers from 0 to 25 (A=0, B=1, ... Z=25).
-2. **The Keyword Phase:** You choose a secret keyword (e.g., `KEY`). You repeat that keyword until it matches the length of the message you want to encrypt.
+2. **The Cipher Sequence Phase:** You choose a sequence of monoalphabetic ciphers (e.g., `C1 C2 C2 C1`) and assign a shift number to each unique cipher (e.g., `C1=6`, `C2=20`). You repeat that mapping until it covers the length of the message.
    - *Message:*  `H E L L O W O R L D`
-   - *Keyword:*  `K E Y K E K E Y K E`
-3. **Encryption:** You add the numerical value of the message letter and the corresponding keyword letter together (wrapping around after Z).
-4. **Decryption:** You take the encrypted letter and subtract the value of the keyword letter to get the original message back.
+   - *Shifts:*   `6 20 20 6 20 20 6 20 20 6`
+3. **Encryption:** You add the numerical value of the message letter and the corresponding shift number together (wrapping around after Z).
+4. **Decryption:** You take the encrypted letter and subtract the corresponding shift number to get the original message back.
 
 ---
 
@@ -30,20 +30,20 @@ Here is the breakdown of tasks to divide among the group to complete the project
 
 ### Phase 2: Core Mathematics & Logic Formulation
 - [ ] **Letter Translation:** Research and understand how to convert letters to numbers in Python using the `ord()` and `chr()` functions. Learn how modulo arithmetic (`% 26`) creates the wrap-around effect from Z to A.
-- [ ] **Keyword Expansion:** Write a helper script or function that takes a keyword and repeats it to perfectly match the length of a given text.
+- [ ] **Sequence Logic:** Write logic that takes the sequence of numerical shifts and maps them incrementally across the alphabetic characters of the message.
 
 ### Phase 3: Encryption Implementation (Code)
 - [ ] Create a file named `cipher.py`.
-- [ ] Create the function `encrypt(plaintext, keyword)`.
+- [ ] Create the function `encrypt(plaintext, key_sequence)`.
 - [ ] Inside the function, loop through each character in the `plaintext`:
-  - If the character is a letter, calculate the forward shift using the corresponding letter from the expanded keyword.
+  - If the character is a letter, calculate the forward shift using the corresponding numeric shift from the key sequence.
   - If it is a space or punctuation, just add it to the final result exactly as it is.
 - [ ] Return the finished encrypted string.
 
 ### Phase 4: Decryption Implementation (Code)
-- [ ] In `cipher.py`, create the counterpart function `decrypt(ciphertext, keyword)`.
+- [ ] In `cipher.py`, create the counterpart function `decrypt(ciphertext, key_sequence)`.
 - [ ] Inside the function, loop through each character in the `ciphertext`:
-  - If it's a letter, calculate the **reverse shift** using the keyword letter.
+  - If it's a letter, calculate the **reverse shift** using the numeric shift.
   - Handle the math to ensure subtracting doesn't cause errors if the result goes below zero.
 - [ ] Return the original plaintext string.
 
@@ -53,13 +53,13 @@ Here is the breakdown of tasks to divide among the group to complete the project
   1. Encrypt a message
   2. Decrypt a message
   3. Exit program
-- [ ] Use Python's `input()` function to accept the user's choice, message, and secret keyword.
+- [ ] Use Python's `input()` function to accept the user's choice, message, cipher sequence, and the numeric key assigned to each cipher.
 - [ ] Call the functions from `cipher.py` and neatly `print()` the results to the terminal.
 
 ### Phase 6: Edge Cases & Testing
 - [ ] **Test Case 1:** Basic text. Encrypt "HELLO" with key "ABC". Decrypt the generated text to ensure it turns back into "HELLO".
 - [ ] **Test Case 2:** Sentences with numbers and punctuation (e.g., "Meet me at 12:00 PM!"). Make sure the algorithm handles non-alphabet characters cleanly without crashing.
-- [ ] **Test Case 3:** Edge cases: Empty messages, keywords longer than the message, or keywords containing numbers. Add safeguards to prompt the user if they input an invalid keyword.
+- [ ] **Test Case 3:** Edge cases: Empty messages, or providing non-numerical characters for the shift values. Add safeguards to prompt the user if they input an invalid number.
 
 ---
 
