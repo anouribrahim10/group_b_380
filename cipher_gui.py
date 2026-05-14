@@ -33,7 +33,7 @@ def _ref_encrypt(plaintext: str, key_sequence: list) -> str:
     for ch in plaintext:
         if ch.isalpha():
             base = ord('A') if ch.isupper() else ord('a')
-            shift = key_sequence[k % len(key_sequence)] % 26
+            shift = (key_sequence[k % len(key_sequence)] - 1) % 26
             out.append(chr((ord(ch) - base + shift) % 26 + base))
             k += 1
         else:
@@ -50,7 +50,7 @@ def _ref_decrypt(ciphertext: str, key_sequence: list) -> str:
     for ch in ciphertext:
         if ch.isalpha():
             base = ord('A') if ch.isupper() else ord('a')
-            shift = key_sequence[k % len(key_sequence)] % 26
+            shift = (key_sequence[k % len(key_sequence)] - 1) % 26
             out.append(chr((ord(ch) - base - shift) % 26 + base))
             k += 1
         else:
